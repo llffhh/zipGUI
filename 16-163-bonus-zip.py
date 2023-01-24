@@ -11,10 +11,13 @@ choose_button2 = sg.FolderBrowse("Choose", key = "folderpath")
 
 compress_button = sg.Button("Compress")
 output_label = sg.Text(key = 'output', text_color = "red")
+exit_button = sg.Button("Exit")
 
-window = sg.Window("File Compressor", layout = [[label1, input1, choose_button1],
-                                                [label2, input2, choose_button2],
-                                                [compress_button, output_label]])
+col1 = sg.Column([[label1],[label2]])
+col2 = sg.Column([[input1],[input2]])
+col3 = sg.Column([[choose_button1],[choose_button2]])
+window = sg.Window("File Compressor", layout = [[col1, col2, col3],
+                                                [compress_button, exit_button, output_label]])
 
 while True:
     event, values = window.read()
@@ -26,7 +29,8 @@ while True:
             dest_dir = values['folderpath']
             zipCreator.zip(filepaths, dest_dir)
             window['output'].update(value = 'Compression completed')
-
+        case "Exit":
+            break
         case sg.WIN_CLOSED:
             break
 
